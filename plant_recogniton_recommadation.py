@@ -6,6 +6,8 @@ import dill
 import traceback
 from fastai.vision.all import *
 import pathlib
+import sys
+sys.modules['__main__'].__dict__.update(__dict__)
 
 
 # Python 版本检查
