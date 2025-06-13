@@ -26,10 +26,7 @@ def load_model():
     
     try:
         # 图像分类模型
-        image_model = load_learner(
-            pathlib.Path(__file__).parent / "植物病害识别.pkl",
-            pickle_module=pickle  # 显式指定pickle模块
-        )
+        image_model = load_learner(pathlib.Path(__file__).parent / "植物病害识别.pkl")
         # 协同过滤模型（新增调试日志）
         collab_path = pathlib.Path(__file__).parent / "植物推荐系统.pkl"
         # 验证文件存在性
@@ -40,12 +37,12 @@ def load_model():
         if file_size < 10240:  # 调整为10KB阈值
             raise ValueError(f"模型文件过小，可能不完整")
         with open(collab_path, 'rb') as f:
+            # 添加weights_only参数解决警告
             collab_data = torch.load(
                 f, 
                 map_location='cpu',
-                pickle_module=pickle,  # 添加pickle模块
-                weights_only=False,
-                encoding='utf-8' ) # 指定编码格式
+                weights_only=False  # 显式声明加载模式
+            )
         return {
             'image': image_model,
             'collab': {
@@ -61,6 +58,7 @@ def load_model():
     finally:
         if sys.platform == "win32" and temp is not None:
             pathlib.PosixPath = temp
+
 
 @st.cache_data
 def load_treatments():
