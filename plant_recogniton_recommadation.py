@@ -4,15 +4,16 @@ import pandas as pd
 import pickle
 import dill
 import traceback
+from fastai.vision.all import *
+import pathlib
+from fastai.learner import save_model
+save_model('植物病害识别.pkl', model, pickle_protocol=4)  # 使用更兼容的协议
 
 
 # Python 版本检查
 if sys.version_info >= (3, 13):
     st.error("⚠️ 当前 Python 版本为 3.13+，可能与 fastai 不兼容。建议使用 Python 3.11。")
     st.stop()
-
-from fastai.vision.all import *
-import pathlib
 
 # 模型加载函数
 @st.cache_resource
