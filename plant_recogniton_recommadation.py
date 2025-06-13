@@ -1,7 +1,8 @@
 import streamlit as st
 import sys
 import pandas as pd
-
+import dill
+import traceback
 
 # Python 版本检查
 if sys.version_info >= (3, 13):
@@ -15,7 +16,7 @@ import pathlib
 @st.cache_resource
 def load_model():
     """加载并缓存模型"""
-    model_metadata = {  # 添加元数据字典
+    model_metadata = {  
     'model_type': 'FastAI CNN',
     'input_size': (3, 224, 224),
     'batch_size': 64,
@@ -26,8 +27,18 @@ def load_model():
         pathlib.PosixPath = pathlib.WindowsPath
     
     try:
+        # 添加路径验证
+        model_dir = pathlib.Path(__file__).parent
+        st.toast(f"当前工作目录: {model_dir}", icon="📁")
+        
         # 图像分类模型
-        image_model = load_learner(pathlib.Path(__file__).parent / "植物病害识别.pkl")
+        model_path = model_dir / "植物病害识别.pkl"
+        st.toast(f"尝试加载模型: {model_path}", icon="🔍")
+        
+        if not model_path.exists():
+            raise FileNotFoundError(f"模型文件不存在于：{model_path}")
+            
+        image_model = load_learner(model_path)
         # 协同过滤模型（新增调试日志）
         collab_path = pathlib.Path(__file__).parent / "植物推荐系统.pkl"
         # 验证文件存在性
@@ -54,7 +65,10 @@ def load_model():
             'metadata': model_metadata  # 添加元数据字段
         }
     except Exception as e:
+        # 显示完整错误堆栈
         st.error(f"""模型加载失败: {str(e)}""")
+        st.error(f"错误类型: {type(e).__name__}")
+        st.error(f"错误详情:\n{traceback.format_exc()}")  # 新增错误堆栈
         return None
     finally:
         if sys.platform == "win32" and temp is not None:
