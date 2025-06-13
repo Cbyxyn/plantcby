@@ -2,13 +2,10 @@ import streamlit as st
 import sys
 import pandas as pd
 import pickle
-import dill
 import traceback
+import dill
 from fastai.vision.all import *
 import pathlib
-import sys
-sys.modules['__main__'].__dict__.update(__dict__)
-
 
 # Python 版本检查
 if sys.version_info >= (3, 13):
@@ -18,6 +15,8 @@ if sys.version_info >= (3, 13):
 # 模型加载函数
 @st.cache_resource
 def load_model():
+    if __name__ == '__main__':
+    sys.modules['__main__'] = sys.modules[__name__]
     """加载并缓存模型"""
     model_metadata = {  # 添加元数据字典
     'model_type': 'FastAI CNN',
