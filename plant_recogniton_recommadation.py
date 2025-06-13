@@ -46,7 +46,7 @@ def load_model():
                 map_location='cpu',
                 pickle_module=pickle,  # 添加pickle模块
                 weights_only=False,
-                encoding='utf-8'  # 指定编码格式
+                encoding='utf-8' ) # 指定编码格式
         return {
             'image': image_model,
             'collab': {
