@@ -6,8 +6,6 @@ import dill
 import traceback
 from fastai.vision.all import *
 import pathlib
-from fastai.learner import save_model
-save_model('植物病害识别.pkl', model, pickle_protocol=4)  # 使用更兼容的协议
 
 
 # Python 版本检查
