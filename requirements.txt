@@ -1,23 +1,10 @@
-# 核心依赖
-fastai==2.7.14
-torch==2.1.2
-torchvision==0.16.2
-
-# 数据处理
-pandas==2.1.4
-openpyxl==3.1.2
-
-# 图像处理
 pillow==10.4.0
 torchcam==0.4.0
-
-# 可视化 & Web框架
-streamlit==1.31.0
-
-# 系统工具
-python-dotenv==1.0.1
-pathlib==1.0.1
-
-# 新增fastai的隐藏依赖
-pyyaml>=6.0.1
-scipy>=1.10.1
+fastai>=2.7.14
+torch>=2.1.2
+torchvision>=0.16.2
+streamlit>=1.31.0
+pandas>=2.1.4
+openpyxl>=3.1.2
+python-dotenv>=1.0.1
+pathlib>=1.0.1
